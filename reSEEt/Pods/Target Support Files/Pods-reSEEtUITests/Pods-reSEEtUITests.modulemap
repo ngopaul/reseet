@@ -1,0 +1,6 @@
+framework module Pods_reSEEtUITests {
+  umbrella header "Pods-reSEEtUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
