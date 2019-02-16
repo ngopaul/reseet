@@ -105,11 +105,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 //print(blockCornerPoints[0])
                 let blockFrame = block.frame
                 print(blockFrame)
-                
-                
-                //let next = CGRect(x: blockFrame.minX, y: (blockFrame.minY/2), width: blockFrame.width, height: blockFrame.height)
-                //print(next)
-                
                 //let myBox  = [[UIView alloc] initWithFrame:CGRectMake(180, 35, 10, 10)]
                 //let myView = UIView(frame: blockFrame)
                 //myView.backgroundColor = UIColor.gray
@@ -118,11 +113,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 
                 //self.testView.backgroundColor = UIColor.gray
-                
-                
                 //self.testView.draw(blockFrame)
                 
-                //self.testView.frame = blockFrame
+                self.testView.frame = blockFrame
                 //self.testView.setNeedsDisplay()
                 
                 
