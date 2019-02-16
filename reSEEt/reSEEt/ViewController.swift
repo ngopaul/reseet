@@ -82,7 +82,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
         
-        let pattern = "(?<ID>(\\d){1,})[\n( )]*(?<ITEM>(?![.0-9 ]off)[0-9a-zA-Z. ]{4,})(?<COST>[\\$]*(\\d)+.(\\d)+)"
+        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )]+(?<ITEM>[0-9a-zA-Z. \n]{4,})(?<COST>[\\$]*(\\d)+.(\\d)+)"
         // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         
@@ -100,13 +100,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             
             let resultText = result.text
-            // print("result.txt: " + result.text)
+            print("result.txt: " + result.text)
             
             let nsrange = NSRange(resultText.startIndex..<resultText.endIndex, in: resultText)
             regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
                 
             })
-            
+            struct item {
+                var ID = ""
+                var ITEM = ""
+                var COST = ""
+            }
+            var items : [item] = []
             
             let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
             
