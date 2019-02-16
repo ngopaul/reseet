@@ -82,7 +82,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
         
-        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )]+(?<ITEM>[0-9a-zA-Z. \n]{4,})(?<COST>[\\$]*(\\d)+.(\\d)+)"
+        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<ITEM>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
         // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         
@@ -106,12 +106,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
                 
             })
-            struct item {
+            struct Item {
                 var ID = ""
                 var ITEM = ""
                 var COST = ""
+                var CATEGORY : [IntegerLiteralType] = []
             }
-            var items : [item] = []
+            var items : [Item] = []
             
             let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
             
@@ -120,18 +121,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if let matches = matches {
                 for match in matches
                 {
+                    var temp_item = Item()
                     for component in ["ID","ITEM","COST"] {
                         let nsrange = match.range(withName: component)
                         if nsrange.location != NSNotFound,
                             let range = Range(nsrange, in: resultText)
                         {
-                            print("\(component): \(resultText[range])")
+                            // print("\(component): \(resultText[range])")
+                            switch "\(component)" {
+                                case "ID":
+                                    temp_item.ID = "\(resultText[range])"
+                            case "ITEM":
+                                    temp_item.ITEM = "\(resultText[range])"
+                            case "COST":
+                                    temp_item.COST = "\(resultText[range])"
+                            default:
+                                print("Error: component was not in cases!")
+                            }
+                            
                         }
                     }
+                    items.append(temp_item)
                 }
             }
             
-            
+            print(items)
             for block in result.blocks {
                 //print("inblcok loop")
                 let blockText = block.text
