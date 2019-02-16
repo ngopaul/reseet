@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "05AF28D76348491E3692405A945534A1"
+               BlueprintIdentifier = "7ACA2F4E8C43A0EE751A31BD1E17734E"
                BuildableName = "Pods_reSEEt.framework"
                BlueprintName = "Pods-reSEEt"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "05AF28D76348491E3692405A945534A1"
+            BlueprintIdentifier = "7ACA2F4E8C43A0EE751A31BD1E17734E"
             BuildableName = "Pods_reSEEt.framework"
             BlueprintName = "Pods-reSEEt"
             ReferencedContainer = "container:Pods.xcodeproj">

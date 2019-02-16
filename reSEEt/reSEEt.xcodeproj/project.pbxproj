@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5DD4C1CB221822A300F753F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4C1CA221822A300F753F9 /* AppDelegate.swift */; };
 		5DD4C1CD221822A300F753F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4C1CC221822A300F753F9 /* ViewController.swift */; };
-		5DD4C1D0221822A300F753F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DD4C1CE221822A300F753F9 /* Main.storyboard */; };
 		5DD4C1D2221822A400F753F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DD4C1D1221822A400F753F9 /* Assets.xcassets */; };
 		5DD4C1D5221822A400F753F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DD4C1D3221822A400F753F9 /* LaunchScreen.storyboard */; };
 		5DD4C1E0221822A400F753F9 /* reSEEtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4C1DF221822A400F753F9 /* reSEEtTests.swift */; };
@@ -45,7 +44,6 @@
 		5DD4C1C7221822A300F753F9 /* reSEEt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reSEEt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD4C1CA221822A300F753F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5DD4C1CC221822A300F753F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5DD4C1CF221822A300F753F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5DD4C1D1221822A400F753F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5DD4C1D4221822A400F753F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5DD4C1D6221822A400F753F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				F170AB34BE24BF3C29DB0D36 /* Pods-reSEEtUITests.debug.xcconfig */,
 				B4744A0CEC8CA60300EA6780 /* Pods-reSEEtUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -144,7 +141,6 @@
 			children = (
 				5DD4C1CA221822A300F753F9 /* AppDelegate.swift */,
 				5DD4C1CC221822A300F753F9 /* ViewController.swift */,
-				5DD4C1CE221822A300F753F9 /* Main.storyboard */,
 				5DD4C1D1221822A400F753F9 /* Assets.xcassets */,
 				5DD4C1D3221822A400F753F9 /* LaunchScreen.storyboard */,
 				5DD4C1D6221822A400F753F9 /* Info.plist */,
@@ -282,7 +278,6 @@
 				5DD4C1D5221822A400F753F9 /* LaunchScreen.storyboard in Resources */,
 				5DD4C1F92218233100F753F9 /* GoogleService-Info.plist in Resources */,
 				5DD4C1D2221822A400F753F9 /* Assets.xcassets in Resources */,
-				5DD4C1D0221822A300F753F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,14 +353,22 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-reSEEt/Pods-reSEEt-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,14 +442,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5DD4C1CE221822A300F753F9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5DD4C1CF221822A300F753F9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5DD4C1D3221822A400F753F9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
