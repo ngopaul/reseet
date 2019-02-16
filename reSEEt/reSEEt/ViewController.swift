@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Foundation
+
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -80,6 +82,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
         
+        let pattern = "(?<ID>(\\d){1,})[\n( )]*(?<ITEM>(?![.0-9 ]off)[0-9a-zA-Z. ]{4,})(?<COST>[\\$]*(\\d)+.(\\d)+)"
+        // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        
         textRecognizer.process(viImage) { result, error in
             guard error == nil, let result = result else {
 //                let errorString = error?.localizedDescription ?? Constants.detectionNoResultsMessage
@@ -94,7 +100,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             
             let resultText = result.text
-            print("result.txt: " + result.text)
+            // print("result.txt: " + result.text)
+            
+            let nsrange = NSRange(resultText.startIndex..<resultText.endIndex, in: resultText)
+            regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
+                
+            })
+            
+            
+            let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
+            
+//            if let match = regex!.firstMatch(in: resultText, options: [], range: nsrange)
+            
+            if let matches = matches {
+                for match in matches
+                {
+                    for component in ["ID","ITEM","COST"] {
+                        let nsrange = match.range(withName: component)
+                        if nsrange.location != NSNotFound,
+                            let range = Range(nsrange, in: resultText)
+                        {
+                            print("\(component): \(resultText[range])")
+                        }
+                    }
+                }
+            }
+            
+            
             for block in result.blocks {
                 //print("inblcok loop")
                 let blockText = block.text
@@ -142,7 +174,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     for word in paragraph.words {
                         let wordText = word.text
                         let wordFrame = word.frame
-                        print("word: " + wordText)
+                        // print("word: " + wordText)
                     }
                 }
             }
