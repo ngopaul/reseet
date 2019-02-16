@@ -75,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         print("entered cloudstuff")
         let vision = Vision.vision()
         print("vision dec")
-        let textRecognizer = vision.cloudTextRecognizer()
+        let textRecognizer = vision.cloudDocumentTextRecognizer()
         print("textrec dec")
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
@@ -94,17 +94,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             
             let resultText = result.text
-            //print("result.txt: " + result.text)
+            print("result.txt: " + result.text)
             for block in result.blocks {
                 //print("inblcok loop")
                 let blockText = block.text
-                print("block: " + blockText)
+                //print("block: " + blockText)
                 let blockConfidence = block.confidence
                 let blockLanguages = block.recognizedLanguages
-                let blockCornerPoints = block.cornerPoints
+                // let blockCornerPoints = block.cornerPoints
                 //print(blockCornerPoints[0])
                 let blockFrame = block.frame
-                print(blockFrame)
+                //print(blockFrame)
                 //let myBox  = [[UIView alloc] initWithFrame:CGRectMake(180, 35, 10, 10)]
                 //let myView = UIView(frame: blockFrame)
                 //myView.backgroundColor = UIColor.gray
@@ -121,18 +121,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 //self.view
                 //[self.view addSubview:myBox]
-                for line in block.lines {
-                    let lineText = line.text
-                    let lineConfidence = line.confidence
-                    let lineLanguages = line.recognizedLanguages
-                    let lineCornerPoints = line.cornerPoints
-                    let lineFrame = line.frame
-                    for element in line.elements {
-                        let elementText = element.text
-                        let elementConfidence = element.confidence
-                        let elementLanguages = element.recognizedLanguages
-                        let elementCornerPoints = element.cornerPoints
-                        let elementFrame = element.frame
+//                for line in block.lines {
+//                    let lineText = line.text
+//                    print("line: " + lineText)
+//                    let lineConfidence = line.confidence
+//                    let lineLanguages = line.recognizedLanguages
+//                    let lineCornerPoints = line.cornerPoints
+//                    let lineFrame = line.frame
+//                    for element in line.elements {
+//                        let elementText = element.text
+//                        let elementConfidence = element.confidence
+//                        let elementLanguages = element.recognizedLanguages
+//                        let elementCornerPoints = element.cornerPoints
+//                        let elementFrame = element.frame
+//                    }
+//                }
+                for paragraph in block.paragraphs {
+                    let paragraphText = paragraph.text
+                    let paragraphFrame = paragraph.frame
+                    for word in paragraph.words {
+                        let wordText = word.text
+                        let wordFrame = word.frame
+                        print("word: " + wordText)
                     }
                 }
             }
