@@ -28,6 +28,54 @@ var all_items : [Item] = []
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var resultText: String = "" {
+        didSet {
+            let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<NAME>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
+            // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
+            let regex = try? NSRegularExpression(pattern: pattern, options: [])
+            
+            let nsrange = NSRange(resultText.startIndex..<resultText.endIndex, in: resultText)
+            regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
+                
+            })
+            
+            var items : [Item] = []
+            
+            let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
+            
+            if let matches = matches {
+                
+                for match in matches
+                {
+                    var id = ""
+                    var name = ""
+                    var cost = ""
+                    for component in ["ID","NAME","COST"] {
+                        let nsrange = match.range(withName: component)
+                        if nsrange.location != NSNotFound,
+                            let range = Range(nsrange, in: resultText)
+                        {
+                            // print("\(component): \(resultText[range])")
+                            switch "\(component)" {
+                            case "ID":
+                                id = "\(resultText[range])"
+                            case "NAME":
+                                name = "\(resultText[range])"
+                            case "COST":
+                                cost = "\(resultText[range])"
+                            default:
+                                print("Error: component was not in cases!")
+                            }
+                        }
+                    }
+                    let temp_item = Item(id: id, name: name, cost: cost)
+                    items.append(temp_item)
+                }
+            }
+            print(items)
+            all_items = items
+        }
+    }
     @IBOutlet weak var testView: UIView!
     /// Firebase vision instance.
     // [START init_vision]
@@ -88,6 +136,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         picker.dismiss(animated: true, completion: nil)
     }
     
+    
+    
     func cloudstuff(image: UIImage) {
         print("entered cloudstuff")
         let vision = Vision.vision()
@@ -97,9 +147,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
         
-        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<NAME>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
-        // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
-        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        
         
         textRecognizer.process(viImage) { result, error in
             guard error == nil, let result = result else {
@@ -107,59 +155,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //                self.resultsText = "Text recognizer failed with error: \(errorString)"
 //                self.showResults()
                 // ...
-                print("here")
                 return
             }
-            print("in here")
             // Recognized text
-            
-            
-            let resultText = result.text
+            self.resultText = result.text
             // print("result.txt: " + result.text)
             
-            let nsrange = NSRange(resultText.startIndex..<resultText.endIndex, in: resultText)
-            regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
-                
-            })
-            
-            var items : [Item] = []
-            
-            let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
-            
-//            if let match = regex!.firstMatch(in: resultText, options: [], range: nsrange)
-            
-            if let matches = matches {
-                
-                for match in matches
-                {
-                    var id = ""
-                    var name = ""
-                    var cost = ""
-                    for component in ["ID","NAME","COST"] {
-                        let nsrange = match.range(withName: component)
-                        if nsrange.location != NSNotFound,
-                            let range = Range(nsrange, in: resultText)
-                        {
-                            // print("\(component): \(resultText[range])")
-                            switch "\(component)" {
-                                case "ID":
-                                    id = "\(resultText[range])"
-                            case "NAME":
-                                    name = "\(resultText[range])"
-                            case "COST":
-                                    cost = "\(resultText[range])"
-                            default:
-                                print("Error: component was not in cases!")
-                                }
-                            }
-                        }
-                    let temp_item = Item(id: id, name: name, cost: cost)
-                    items.append(temp_item)
-                }
-            }
-            
-            print(items)
-            all_items = items
             
             for block in result.blocks {
                 //print("inblcok loop")
@@ -175,16 +176,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 //let myView = UIView(frame: blockFrame)
                 //myView.backgroundColor = UIColor.gray
                 //myView.draw(blockFrame)
-                
-                
-                
                 //self.testView.backgroundColor = UIColor.gray
                 //self.testView.draw(blockFrame)
-                
                 self.testView.frame = blockFrame
                 //self.testView.setNeedsDisplay()
-                
-                
                 //self.view
                 //[self.view addSubview:myBox]
 //                for line in block.lines {
@@ -212,6 +207,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     }
                 }
             }
+            self.performSegue(withIdentifier: "mainsegue", sender: self)
             
 //            let storyboard = UIStoryboard(name: )
             
@@ -262,6 +258,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
 
     }
+
     
     
 }

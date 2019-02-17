@@ -1,10 +1,12 @@
 import UIKit
 
 @IBDesignable class Category: UIStackView {
+    let colorMap : Dictionary<IntegerLiteralType, UIColor> = [0: UIColor.white, 1: UIColor.red, 2: UIColor.blue, 3: UIColor.green, 4: UIColor.yellow]
+    
     //MARK: Properties
     private var categories = [UIButton]() // rating buttons
     var category : [IntegerLiteralType] = [] // rating
-    @IBInspectable var categorySize: CGSize = CGSize(width: 10.0, height: 5.0) {
+    @IBInspectable var categorySize: CGSize = CGSize(width: 2.0, height: 10.0) {
         didSet {
             setupButtons()
         }
@@ -44,7 +46,7 @@ import UIKit
         for _ in 0..<categoryCount {
             // Create the button
             let button = UIButton()
-            button.backgroundColor = UIColor.red
+            button.backgroundColor = self.colorMap[0]
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: categorySize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: categorySize.width).isActive = true
@@ -55,5 +57,9 @@ import UIKit
             addArrangedSubview(button)
             categories.append(button)
         }
+    }
+    
+    private func update() {
+        if red.isOn + blue.isOn + green.isOn 
     }
 }
