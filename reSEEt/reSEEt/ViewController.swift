@@ -14,6 +14,7 @@ struct Item {
     var id : String
     var name : String
     var cost : String
+    var label : String
     var category : Category
     
     init(id: String, name: String, cost: String) {
@@ -21,6 +22,7 @@ struct Item {
         self.name = name
         self.cost = cost
         self.category = Category()
+        self.label = ""
     }
 }
 
@@ -30,7 +32,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var resultText: String = "" {
         didSet {
-            let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<NAME>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
+            let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<NAME>[0-9a-zA-Z. ]{4,})[\n( )][\\$]?(?<COST>(\\d)+\\.(\\d){2})"
             // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
             let regex = try? NSRegularExpression(pattern: pattern, options: [])
             

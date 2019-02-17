@@ -45,6 +45,7 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.id.text = item.id
         cell.name.text = item.name
         cell.cost.text = item.cost
+        cell.label.text = item.label
         // cell.category.category = item.category
         
         return cell
@@ -55,10 +56,17 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
         print(indexPath.row)
         print([switches[0], switches[1], switches[2], switches[3]])
         items[indexPath.row].category.update()
-//        items[indexPath.row].cost += "."
+        var temp : [String] = []
+        let color_arr = ["red", "blue", "green", "yellow"]
+        for i in 0...3 {
+            if switches[i] {
+                temp.append(color_arr[i])
+            }
+        }
+        items[indexPath.row].label = temp.joined(separator: ", ")
 //        print(items[indexPath.row].cost)
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
+//        self.tableView.reloadData()
+        self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
     }
     
     @IBOutlet weak var red: UISwitch!
