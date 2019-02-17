@@ -43,6 +43,7 @@ import UIKit
             button.removeFromSuperview()
         }
         categories.removeAll()
+        self.category = []
         for _ in 0..<categoryCount {
             // Create the button
             let button = UIButton()
@@ -56,10 +57,34 @@ import UIKit
             // Add the button to the stack
             addArrangedSubview(button)
             categories.append(button)
+            self.category += [0]
         }
     }
     
     private func update() {
-        if red.isOn + blue.isOn + green.isOn 
+        for button in categories {
+            removeArrangedSubview(button)
+            button.removeFromSuperview()
+        }
+        categories.removeAll()
+        for i in 0..<categoryCount {
+            if (switches[i].isOn) {
+                category[i] = 1 - category[i]
+            }
+        }
+        for i in 0..<categoryCount {
+            // Create the button
+            let button = UIButton()
+            button.backgroundColor = self.colorMap[(i+1)*self.category[i]]
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.heightAnchor.constraint(equalToConstant: categorySize.height).isActive = true
+            button.widthAnchor.constraint(equalToConstant: categorySize.width).isActive = true
+            
+            button.addTarget(self, action: #selector(Category.categoryButtonTapped(button:)), for: .touchUpInside)
+            
+            // Add the button to the stack
+            addArrangedSubview(button)
+            categories.append(button)
+        }
     }
 }

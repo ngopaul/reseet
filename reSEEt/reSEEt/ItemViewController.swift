@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 
-var red : UISwitch
-var green : UISwitch
-var blue : UISwitch
-var yellow : UISwitch
+var red = UISwitch()
+var green = UISwitch()
+var blue = UISwitch()
+var yellow = UISwitch()
+var switches = [red, green, blue, yellow]
 
 class ItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
