@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  reSEEt
 //
-//  Created by Caleb Kuo on 2/16/19.
-//  Copyright © 2019 Caleb Kuo. All rights reserved.
+//  Created by Paul Ngo on 2/16/19.
+//  Copyright © 2019 Paul Ngo. All rights reserved.
 //
 
 import UIKit

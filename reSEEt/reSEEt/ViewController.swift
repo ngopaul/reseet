@@ -10,6 +10,21 @@ import UIKit
 import Firebase
 import Foundation
 
+struct Item {
+    var id : String
+    var name : String
+    var cost : String
+    var category : [IntegerLiteralType]
+    
+    init(id: String, name: String, cost: String) {
+        self.id = id
+        self.name = name
+        self.cost = cost
+        self.category = []
+    }
+}
+
+var all_items : [Item] = []
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -82,7 +97,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let viImage = VisionImage(image: image)
         print("viImage instantiated")
         
-        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<ITEM>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
+        let pattern = "(?<=[\n ]{1})(?<ID>(\\d){1,})[\n( )](?<NAME>[0-9a-zA-Z. ]{4,})[\n( )](?<COST>[\\$]?(\\d)+\\.(\\d){2})"
         // I was forced to use try? instead of try because of error handling. Therefore later regex is called with regex!
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         
@@ -100,18 +115,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             
             let resultText = result.text
-            print("result.txt: " + result.text)
+            // print("result.txt: " + result.text)
             
             let nsrange = NSRange(resultText.startIndex..<resultText.endIndex, in: resultText)
             regex!.enumerateMatches(in: resultText, options: NSRegularExpression.MatchingOptions.reportCompletion, range: nsrange, using: { (result, flags, unsafePointer) in
                 
             })
-            struct Item {
-                var ID = ""
-                var ITEM = ""
-                var COST = ""
-                var CATEGORY : [IntegerLiteralType] = []
-            }
+            
             var items : [Item] = []
             
             let matches = regex?.matches(in: resultText, options: .reportCompletion, range: nsrange)
@@ -119,10 +129,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //            if let match = regex!.firstMatch(in: resultText, options: [], range: nsrange)
             
             if let matches = matches {
+                
                 for match in matches
                 {
-                    var temp_item = Item()
-                    for component in ["ID","ITEM","COST"] {
+                    var id = ""
+                    var name = ""
+                    var cost = ""
+                    for component in ["ID","NAME","COST"] {
                         let nsrange = match.range(withName: component)
                         if nsrange.location != NSNotFound,
                             let range = Range(nsrange, in: resultText)
@@ -130,22 +143,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                             // print("\(component): \(resultText[range])")
                             switch "\(component)" {
                                 case "ID":
-                                    temp_item.ID = "\(resultText[range])"
-                            case "ITEM":
-                                    temp_item.ITEM = "\(resultText[range])"
+                                    id = "\(resultText[range])"
+                            case "NAME":
+                                    name = "\(resultText[range])"
                             case "COST":
-                                    temp_item.COST = "\(resultText[range])"
+                                    cost = "\(resultText[range])"
                             default:
                                 print("Error: component was not in cases!")
+                                }
                             }
-                            
                         }
-                    }
+                    let temp_item = Item(id: id, name: name, cost: cost)
                     items.append(temp_item)
                 }
             }
             
             print(items)
+            all_items = items
+            
             for block in result.blocks {
                 //print("inblcok loop")
                 let blockText = block.text
@@ -197,6 +212,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     }
                 }
             }
+            
+//            let storyboard = UIStoryboard(name: )
             
             
             // Get the text, hopefully separated by \n and grouped together by spaces.
