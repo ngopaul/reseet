@@ -9,11 +9,7 @@
 import Foundation
 import UIKit
 
-var red = UISwitch()
-var green = UISwitch()
-var blue = UISwitch()
-var yellow = UISwitch()
-var switches = [red, green, blue, yellow]
+var switches = [true, true, true, true]
 
 class ItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -49,26 +45,65 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.id.text = item.id
         cell.name.text = item.name
         cell.cost.text = item.cost
-        cell.category.category = item.category
+        // cell.category.category = item.category
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Clicked on!")
+        print(indexPath.row)
+        print([switches[0], switches[1], switches[2], switches[3]])
+        items[indexPath.row].category.update()
+//        items[indexPath.row].cost += "."
+//        print(items[indexPath.row].cost)
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
+    }
+    
     @IBOutlet weak var red: UISwitch!
     @IBAction func toggle_red(_ sender: Any) {
-        red.setOn(!red.isOn, animated: true)
+        if (red.isOn) {
+            red.isOn = false
+            switches[0] = false
+        } else {
+            red.isOn = true
+            switches[0] = true
+        }
+        red.setOn(red.isOn, animated: true)
     }
     @IBOutlet weak var blue: UISwitch!
     @IBAction func toggle_blue(_ sender: Any) {
-        blue.setOn(!blue.isOn, animated: true)
+        if (blue.isOn) {
+            blue.isOn = false
+            switches[1] = false
+        } else {
+            switches[1] = true
+            blue.isOn = true
+        }
+        blue.setOn(blue.isOn, animated: true)
     }
     @IBOutlet weak var green: UISwitch!
     @IBAction func toggle_green(_ sender: Any) {
-        green.setOn(!green.isOn, animated: true)
+        if (green.isOn) {
+            green.isOn = false
+            switches[2] = false
+        } else {
+            switches[2] = true
+            green.isOn = true
+        }
+        green.setOn(green.isOn, animated: true)
     }
     @IBOutlet weak var yellow: UISwitch!
     @IBAction func toggle_yellow(_ sender: Any) {
-        yellow.setOn(!yellow.isOn, animated: true)
+        if (yellow.isOn) {
+            yellow.isOn = false
+            switches[3] = false
+        } else {
+            switches[3] = true
+            yellow.isOn = true
+        }
+        yellow.setOn(yellow.isOn, animated: true)
     }
     
     

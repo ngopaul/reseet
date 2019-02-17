@@ -14,13 +14,13 @@ struct Item {
     var id : String
     var name : String
     var cost : String
-    var category : [IntegerLiteralType]
+    var category : Category
     
     init(id: String, name: String, cost: String) {
         self.id = id
         self.name = name
         self.cost = cost
-        self.category = []
+        self.category = Category()
     }
 }
 

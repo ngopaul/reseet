@@ -5,7 +5,7 @@ import UIKit
     
     //MARK: Properties
     private var categories = [UIButton]() // rating buttons
-    var category : [IntegerLiteralType] = [] // rating
+    var category : [Int] = [] // rating
     @IBInspectable var categorySize: CGSize = CGSize(width: 2.0, height: 10.0) {
         didSet {
             setupButtons()
@@ -52,7 +52,7 @@ import UIKit
             button.heightAnchor.constraint(equalToConstant: categorySize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: categorySize.width).isActive = true
             
-            button.addTarget(self, action: #selector(Category.categoryButtonTapped(button:)), for: .touchUpInside)
+            // button.addTarget(self, action: #selector(Category.categoryButtonTapped(button:)), for: .touchUpInside)
             
             // Add the button to the stack
             addArrangedSubview(button)
@@ -61,30 +61,37 @@ import UIKit
         }
     }
     
-    private func update() {
+    func update() {
+        print("changing the color!")
         for button in categories {
             removeArrangedSubview(button)
             button.removeFromSuperview()
         }
         categories.removeAll()
         for i in 0..<categoryCount {
-            if (switches[i].isOn) {
+            if (switches[i]) {
                 category[i] = 1 - category[i]
             }
         }
-        for i in 0..<categoryCount {
+        for i in 1..<categoryCount+1 {
             // Create the button
             let button = UIButton()
-            button.backgroundColor = self.colorMap[(i+1)*self.category[i]]
+            if switches[i-1] {
+                button.backgroundColor = self.colorMap[i]
+            } else {
+                button.backgroundColor = self.colorMap[0]
+            }
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: categorySize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: categorySize.width).isActive = true
             
-            button.addTarget(self, action: #selector(Category.categoryButtonTapped(button:)), for: .touchUpInside)
+            // button.addTarget(self, action: #selector(Category.categoryButtonTapped(button:)), for: .touchUpInside)
             
             // Add the button to the stack
             addArrangedSubview(button)
             categories.append(button)
         }
+        print("The colors should be:")
+        print(categories[0].backgroundColor, categories[1].backgroundColor, categories[2].backgroundColor, categories[3].backgroundColor)
     }
 }
